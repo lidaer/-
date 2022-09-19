@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-
   </div>
 
 </template>
@@ -9,6 +8,8 @@
 // @ is an alias to /src
 
 
+import Package from "@/components/International";
+import Header from "@/components/Header";
 export default {
   name: 'HomeView',
   components: {

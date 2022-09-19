@@ -1,6 +1,17 @@
 <template>
 
   <div style="padding-left: 50px;padding-top: 50px">
+    <div>
+      票类型：
+      <el-select v-model="ticket" placeholder="票类型">
+        <el-option label="头等、公务舱" value=1 />
+        <el-option label="悦享经济舱、超级经济舱" value=2 />
+        <el-option label="经济舱" value=3 />
+      </el-select>
+    </div>
+
+    <br/>
+    <br/>
 
     <!-- Form -->
     <el-button type="success" @click="add()"
@@ -29,11 +40,17 @@
         <el-input v-model="form.weight"/>
       </el-form-item>
 
-      <el-form-item label="尺寸（CM）">
-        <el-input v-model="form.size"/>
+      <el-form-item label="长（CM）">
+        <el-input v-model="form.length"/>
       </el-form-item>
 
+      <el-form-item label="宽（CM）">
+        <el-input v-model="form.width"/>
+      </el-form-item>
 
+      <el-form-item label="高（CM）">
+        <el-input v-model="form.height"/>
+      </el-form-item>
 
     </el-form>
 
@@ -55,8 +72,6 @@
       </span>
     </template>
 
-
-
   </el-dialog>
 
 
@@ -68,11 +83,13 @@
     <el-table :data="tableData" stripe style="width: 100%">
       <el-table-column prop="district" label="区域" width="180"/>
       <el-table-column prop="weight" label="重量（KG）" width="180"/>
-      <el-table-column prop="size" label="尺寸（CM）"/>
+      <el-table-column prop="length" label="长（CM）"/>
+      <el-table-column prop="width" label="宽（CM）"/>
+      <el-table-column prop="height" label="高（CM）"/>
 
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button size="small" @click="handleEdit(scope.$index, scope.row)"
+          <el-button size="small" @click="handleEdit(scope.row)"
           >Edit</el-button
           >
           <el-button
@@ -103,7 +120,7 @@ import request from "core-js/internals/queue";
 import axios from "axios";
 
 export default {
-  name: "Package",
+  name: "International",
 
   data() {
     return {
@@ -112,10 +129,13 @@ export default {
       form: {
         region: '',
         weight: '',
-        size: '',
+        length: '',
+        width: '',
+        height: '',
         district: 0
       },
 
+      ticket: "1",
       tableData: [],
       price: []
     }
@@ -157,7 +177,8 @@ export default {
     },
 
     handleEdit(row){
-
+      this.form=row;
+      this.dialogFormVisible=true;
     },
 
     handleDelete(id){
